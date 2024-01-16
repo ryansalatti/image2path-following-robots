@@ -1,0 +1,27 @@
+project(DEMO_ROBOTS)
+
+include_directories(${LIBMC_SOURCE_DIR}/src/include)
+include_directories($ENV{CHHOME}/extern/include)
+include_directories(../../../src/include)
+include_directories($ENV{CHHOME}/toolkit/include)
+include_directories($ENV{CHHOME}/toolkit/embedch/toolkit)
+
+add_executable(robots_multi_task_client multi_task_client.c)
+add_executable(robots_multi_task_server multi_task_server.c)
+
+if(CMAKE_HOST_WIN32)
+target_link_libraries(robots_multi_task_client mc_static ws2_32 embedch chsdk)
+target_link_libraries(robots_multi_task_server mc_static ws2_32 embedch chsdk)
+else()
+target_link_libraries(robots_multi_task_client mc_static embedch chsdk)
+target_link_libraries(robots_multi_task_server mc_static embedch chsdk)
+endif()
+
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/point_def.h" DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/attachfile.c" DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/retrievefile.ch" DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/robotController.h" DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/robotController.c" DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/imageProcessing.h" DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/imageProcessing.c" DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/runrobot.ch" DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

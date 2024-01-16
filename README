@@ -1,0 +1,104 @@
+This directory contains the server and client code utilizing the MobileC library for an image to path navigation system.
+
+ **************************************
+ *** Full Installation Instructions ***
+ **************************************
+
+To build these example programs, please follow the guide below:
+
+--------------------------------------------------
+1. Downloading and Configuring Ch and Linkbot Labs
+--------------------------------------------------
+If you already have Linkbot Labs installed, you can skip this section.
+
+To Setup Barobo Software Repository:
+Open a terminal (Ctrl+Alt+T)
+Execute the following command in the terminal window one at a time:
+wget https://download.linkbotlabs.com/repos/apt/debian/public.key -O - | sudo apt-key add -
+echo 'deb https://download.linkbotlabs.com/repos/apt/debian jessie main' | sudo tee --append /etc/apt/sources.list.d/barobo.list
+sudo apt-get update
+
+To Install LinkbotLabs on Raspberry Pi:
+Open a terminal (Ctrl+Alt+T)
+Execute the following command in the terminal window:
+sudo apt-get install linkbotlabs -y
+
+To Upgrade LinkbotLabs on Raspberry Pi:
+Open a terminal (Ctrl+Alt+T)
+Execute the following command in the terminal window one at a time:
+sudo apt-get update
+sudo apt-get upgrade -y
+
+--------------------
+2. Downloading CMake
+--------------------
+If you already have CMake installed, you can skip this section.
+
+To install CMake, you can try to use the apt command, as it is much easier. Open the console and type: sudo apt install cmake make
+
+If that works without errors, you can skip to the next section.
+
+If that didn’t work, we can install CMake using an alternative method. Open the console and type: wget http://www.cmake.org/files/v2.8/cmake-2.8.3.tar.gz
+
+Now we must extract the CMake source code from the downloaded file. Type this into the console:
+
+tar xzf cmake-2.8.3.tar.gz
+cd cmake-2.8.3
+./configure --prefix=/opt/cmake
+
+We basically instructed the install script to install CMake in /opt/cmake. Now Type:
+make
+make install
+
+After installation without any errors you can verify the installation by running the command:
+/opt/cmake/bin/cmake -version
+
+---------
+3. (a) Camera
+---------
+Enable the Camera
+First, you will need to ensure your raspberry pi’s software is up to date. Open the console and type:
+sudo apt-get update
+sudo apt-get upgrade
+
+Once that has completed, you may have to reboot.
+Next, open the console and type: sudo raspi-config
+Select Interface Options
+Select Camera (Or Legacy Camera) > Enable
+Select Finish and reboot
+
+---------------
+3. (b) Camera Test
+---------------
+Once rebooted, open the console and navigate to Desktop (cd Desktop). Then type:
+raspistill -o test.jpg 
+
+The camera module should light up red for a few seconds, then the image will appear on your desktop. Open the test.jpg image to verify it worked.
+
+----------------------------------------------------------
+4. Downloading and Configuring image2path-following-robots 
+----------------------------------------------------------
+Navigate to https://github.com/ryansalatti/repositories/image2path-following-robots
+Click the green “Code” button, and then “Download Zip”. Extract the contents of the zip file into your Downloads folder. 
+
+Navigate to Downloads/image2path-following-robots/demos/thesis/robots and open the file ‘multi_task_client.c’. 
+
+In the console, type ip addr
+
+Copy the ip address directly to the right of the term ‘inet’ and replace it with the ip address of the ‘Host’.
+
+You also need to get the ip address for the other raspberry pi. Open the console on the other raspberry pi, and type ip addr
+
+Copy the ip address directly to the right of the term ‘inet’ and replace the ip address next to every line that says ‘Server to execute the command on’. Alternatively, you can use the local raspberry pi addresses that were generated when the OS was installed on each of the microSD cards (i.e. raspberrypi.local).
+
+Save the file.
+
+Now, in the console, navigate to the Mobile-C home directory’s build folder (Mobile-C directory should be located in your Downloads folder): 
+cd Downloads/Mobile-C-master/build
+
+Type ch to open the Ch shell. Then type one at a time:
+
+cmake .. 
+make
+
+This could take awhile.
